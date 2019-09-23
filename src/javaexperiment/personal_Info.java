@@ -88,6 +88,7 @@ public class personal_Info {
                 }
             }
         } while (lname == null);
+        
         do {
             System.out.print("Age : ");
             String temp = scanner1.next();
