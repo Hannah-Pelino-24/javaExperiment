@@ -15,12 +15,12 @@ public class schedule {
     private String subject;
     private String schedule;
     private String unit;
-    private int schedID =1;
+    private int schedID = 1;
 
     Scanner scanner = new Scanner(System.in);
 
     public schedule() {
-           try {
+        try {
             this.schedID = setSchedId();
         } catch (IOException ex) {
 //            System.out.println();
@@ -76,23 +76,6 @@ public class schedule {
         this.unit = unit;
     }
 
-    public int getSchedID() {
-        return schedID;
-    }
-
-    public void setSchedID(int schedID) {
-        this.schedID = schedID;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    
     public boolean check(String name) {
         String rule = "^[a-zA-Z ]*$";
         return name.matches(rule);
@@ -107,91 +90,98 @@ public class schedule {
         BufferedWriter scheduleWriter = new BufferedWriter(new FileWriter("C:\\Users\\2ndyrGroupC\\Documents\\NetBeansProjects\\schedule.txt", true));
 
         Scanner scan = new Scanner(System.in);
-        System.out.println("Want to add schedule???\nPress 1 for Yes\nPress 2 for No");
-        int addSched = scan.nextInt();
-        if (addSched == 1) {
-            do {
-                System.out.println("***STEP 3***");
+       
+        while (true) {
+             System.out.println("Want to add schedule???\nPress 1 for Yes\nPress 2 for No");
+        int add = scan.nextInt();
+            if (add == 1) {
+                do {
+                    System.out.println("***STEP 3***");
+
+                    System.out.print("Enter Course: ");
+                    String Course = scanner.nextLine();
+                    if (check(Course)) {
+                        this.course = Course;
+                    } else {
+                        try {
+                            throw new MyException("Invalid input...");
+                        } catch (MyException ex) {
+//                    System.out.println("");
+                        }
+                    }
+                } while (course == null);
+
+                do {
+                    System.out.print("Year : ");
+                    String temp = scanner.nextLine();
+                    try {
+                        if (checkInt(temp)) {
+                            this.year = temp;
+                        } else {
+                            throw new MyException("Invalid input!");
+                        }
+
+                    } catch (MyException e) {
+                    }
+
+                } while (year == null);
+
+                do {
+                    System.out.print("Enter Subject: ");
+                    String Subject = scanner.nextLine();
+                    if (check(Subject)) {
+                        this.subject = Subject;
+                    } else {
+                        try {
+                            throw new MyException("Invalid input...");
+                        } catch (MyException ex) {
+//                    System.out.println("");
+                        }
+                    }
+                } while (subject == null);
+
+                do {
+                    System.out.print("Enter Schedule: ");
+                    String Schedule = scanner.nextLine();
+                    if (check(Schedule)) {
+                        this.schedule = Schedule;
+                    } else {
+                        try {
+                            throw new MyException("Invalid input...");
+                        } catch (MyException ex) {
+//                    System.out.println("");
+                        }
+                    }
+                } while (schedule == null);
+
+                do {
+                    System.out.print("Unit : ");
+                    String temp = scanner.nextLine();
+                    try {
+                        if (checkInt(temp)) {
+                            this.unit = temp;
+                        } else {
+                            throw new MyException("Invalid input!");
+                        }
+
+                    } catch (MyException e) {
+                    }
+
+                } while (unit == null);
+
+                scheduleWriter.write(schedID + "\t" + accId + "\t" + course + "\t" + year + "\t" + subject + "\t" + schedule + "\t" + unit);
+                scheduleWriter.newLine();
                 
-                System.out.print("Enter Course: ");
-                String Course = scanner.nextLine();
-                if (check(Course)) {
-                    this.course = Course;
-                } else {
-                    try {
-                        throw new MyException("Invalid input...");
-                    } catch (MyException ex) {
-//                    System.out.println("");
-                    }
-                }
-            } while (course == null);
 
-            do {
-                System.out.print("Year : ");
-                String temp = scanner.nextLine();
-                try {
-                    if (checkInt(temp)) {
-                        this.year = temp;
-                    } else {
-                        throw new MyException("Invalid input!");
-                    }
-
-                } catch (MyException e) {
-                }
-
-            } while (year == null);
-
-            do {
-                System.out.print("Enter Subject: ");
-                String Subject = scanner.nextLine();
-                if (check(Subject)) {
-                    this.subject = Subject;
-                } else {
-                    try {
-                        throw new MyException("Invalid input...");
-                    } catch (MyException ex) {
-//                    System.out.println("");
-                    }
-                }
-            } while (subject == null);
-
-            do {
-                System.out.print("Enter Schedule: ");
-                String Schedule = scanner.nextLine();
-                if (check(Schedule)) {
-                    this.schedule = Schedule;
-                } else {
-                    try {
-                        throw new MyException("Invalid input...");
-                    } catch (MyException ex) {
-//                    System.out.println("");
-                    }
-                }
-            } while (schedule == null);
-
-            do {
-                System.out.print("Unit : ");
-                String temp = scanner.nextLine();
-                try {
-                    if (checkInt(temp)) {
-                        this.unit = temp;
-                    } else {
-                        throw new MyException("Invalid input!");
-                    }
-
-                } catch (MyException e) {
-                }
-
-            } while (unit == null);
-
-            scheduleWriter.write(schedID + "\t" + accId + "\t" + course + "\t" + year + "\t" + subject + "\t" + schedule + "\t" + unit);
-            scheduleWriter.newLine();
-            scheduleWriter.close();
-            return 0;
+            } else {
+                scheduleWriter.close();
+                break;
+            }
+            ++schedID;
         }
         return 0;
     }
-    
+
     public int setSchedId() throws FileNotFoundException, IOException {
         BufferedReader reader;
 
